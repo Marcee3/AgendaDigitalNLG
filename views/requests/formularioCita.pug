@@ -1,0 +1,82 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Novias Los gatitos
+        link(rel="stylesheet", href="/css/style.css")
+    body 
+        .contenedor 
+            //Navegador
+            .encabezadoTop
+                .encabezadoTexto
+                    h3= titulo
+                nav 
+                    a(href="/requests/cliente") Regresar a la pagina principal
+            //Calendario
+            .calendario 
+                header 
+                    p.dia-actual 
+                    .navegador 
+                        span#prev &lt;
+                        span#next &gt;
+                .contenido-calendario 
+                    ul.semanas 
+                        li Dom
+                        li Lun
+                        li Mar
+                        li Miér
+                        li Jue
+                        li Vie
+                        li Sab
+                    ul.dias 
+            //Modal para solicitud
+            #modal.modal 
+                .contenido-modal 
+                    span#cerrar.cerrar &times;
+                    h4 Solicitar cita
+                    form(method= "POST" action="/solicitar")
+                        div 
+                            label(for="nombre") Nombre(s)
+                            input(type="text", name="nombre", id="nombre")
+
+                        div 
+                            label(for="apPaterno") Apellido paterno
+                            input(type="text", name="apPaterno", id="apPaterno")
+
+                        div 
+                            label(for="apMaterno") Apellido materno
+                            input(type="text", name="apMaterno", id="apMaterno")
+
+                        div 
+                            label(for="telefono") Teléfono
+                            input(type="text", name="telefono", id="telefono")
+
+                        div.fecha-hora
+                            .campo 
+                                label(for="fechaEvento") Fecha:
+                                input(type="date", name="fechaEvento", id="fechaEvento")
+                            .campo
+                                label(for="horaEvento") Hora:
+                                input(type="time", name="horaEvento", id="horaEvento")
+
+                        div
+                            label(for="tipoEvento") Tipo de cita
+                            select#tipoCita(name="tipoEvento")
+                                option(value="CitaInicial") Cita 
+                                option(value="Medidas") Medidas 
+                                option(value="Entrega") Entrega
+                                option(value="Planchado") Planchado
+
+                        div 
+                            label(for="detalles") Detalles de la cita
+                            textarea(name="detalles", id="detalles")
+                        button(type="submit") Solicitar cita
+            //Boton para agregar cita
+            button#btn Solicitar cita
+            //Footer
+            footer
+                a(href="/about/informacion") Sobre la App
+
+        //Script    
+        script(src="/js/script.js") 

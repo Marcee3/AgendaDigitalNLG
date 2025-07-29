@@ -1,0 +1,350 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    padding: 0 10px; /*Se pone 0 y 10px para que no se vea el borde*/
+    justify-content: center;
+    min-height: fit-content;
+    background-color:rgb(248, 197, 205);
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Encabezado de la App */
+
+.encabezadoTop {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /*Se pone un alto z-index para que se vea encima de todo*/
+    background-color: #a54870;
+    padding: 10px 0;
+    align-items: center;
+    text-align: center;
+    height: 15vh;
+}
+
+.encabezadoTexto {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    margin: 2px 0; /*Se pone un margen para que no se vea el borde*/
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap; /*Se pone flex-wrap para que se vea en varias filas*/
+    gap: 15px;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para el Calendario de la App*/
+.calendario {
+    width: 450px;
+    background-color: rgb(248, 248, 240);
+    border-radius: 10px;
+    margin-top: 150px; /* para que no se oculte debajo del header */
+}
+
+.calendario header {
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+}
+
+header .navegador {
+    display: flex;
+}
+
+header .navegador span {
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #e47a7a;
+    text-align: center;
+    line-height: 38px;
+    font-size: 1.9rem;
+    border-radius: 50%;
+}
+
+.navegador span:last-child {
+    margin-right: -10px;
+}
+
+.navegador span:hover {
+    background-color: #f7f7f7;
+}
+
+header .dia-actual {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.contenido-calendario {
+    padding: 20px;
+}
+
+.contenido-calendario ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    text-align: center;
+}
+
+.contenido-calendario .dias {
+    margin-bottom: 20px;
+}
+
+.contenido-calendario li {
+    color: #000000;
+    width: calc(100% / 7);
+    font-size: 1.07rem;
+}
+
+.contenido-calendario .semanas li {
+    font-weight: 500;
+    cursor: default;
+}
+
+.contenido-calendario .dias li {
+    z-index: 1; /* Para que los días no se oculten */
+    cursor: pointer;
+    position: relative;
+    margin-top: 30px;
+}
+
+.dias li.inactivo {
+    color: #bcb7b7;
+}
+
+.dias li.activo {
+    color: #ffffff;
+}
+
+.dias li::before {
+    position: absolute;
+    content: "";
+    left: 50%;
+    top: 50%;
+    height: 40px;
+    width: 40px;
+    z-index: -1; /* Para que el círculo no se oculte */
+    border-radius: 50%;
+    transform: translate(-50%, -50%); /* Para centrar el círculo */
+}
+
+.dias li.activo::before {
+    background-color: #e74d8f;
+}
+
+.dias li:not(.activo):hover::before{
+    background-color: #d8a3ba;
+}
+
+.filtro-evento.activo {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #8b1538;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.06);
+    overflow: auto; /* Para que el contenido no se salga del modal */
+}
+
+.contenido-modal {
+    background-color: #f1f1f1;
+    margin: 15% auto; /* Para centrar el contenido */
+    margin-top: 130px;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px #ffffff solid;
+    width: 80%;
+}
+.contenido-modal h4{
+    color: #e74d8f;
+    text-align: center;
+}
+.cerrar {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.cerrar:hover,
+.cerrar:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button {
+    display: block;
+    width: 80%;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 12px 20px;
+    background-color: #a54870;
+    border: 2px solid #ffffff;
+    border-radius: 12px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+  background-color: #e74d8f;
+}
+
+/* Formulario */
+.contenido-login {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 160px; /* para que no se oculte debajo del header */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;    
+}
+
+.contenido-login p{
+    font-size: 18px;
+    text-align: center;
+}
+.contenidoLogin div {
+    display: flex;
+    flex-direction: column;
+}
+
+.contenidoLogin label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+
+/* Para solicitar un evento */
+.fecha-hora {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.fecha-hora .campo {
+    flex: 1;
+}
+
+.fecha-hora label {
+    display: inline-block;
+    margin-right: 5px;
+    font-weight: 500;
+}
+
+input[type ="text"], input[type="date"], input[type="time"], 
+    input[type="tel"], input[type="password"], select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}   
+
+/* Tabla de eventos */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 120px;
+    font-size: 12px;
+}
+
+thead tr, td a {
+    background-color: #ad657e;
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+    align-items: center;
+}
+
+thead th {
+    padding: 5px;
+}
+
+td { 
+    border: 3px solid #ddd;
+    height: 70px;
+}
+tbody tr:hover {
+    background-color: #f3e5f5;
+}
+
+td form button, td a {
+    background-color: #b07086;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+
+
+/* Footer */
+footer {
+    background-color: #a54870;
+    color: #ffffff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10vh;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}

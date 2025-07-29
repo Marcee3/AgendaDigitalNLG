@@ -1,0 +1,43 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Novias Los gatitos
+        link(rel="stylesheet", href="/css/style.css")
+        link(rel="manifest", href="/manifest.json")
+    body 
+        .contenedor 
+            //Navegador
+            .encabezadoTop
+                .encabezadoTexto
+                    h3= titulo 
+                nav 
+                    a(href="/events/citasVenta") Citas 
+                    a(href="/events/entregaVenta") Entregas 
+                    a(href="/events/medidasVenta") Medidas 
+                    a(href="/events/planchadoVenta") Planchado 
+                    a(href="/auth/login") NLG   
+            //Calendario
+            .calendario 
+                header 
+                    p.dia-actual 
+                    .navegador 
+                        span#prev &lt;
+                        span#next &gt;
+                .contenido-calendario 
+                    ul.semanas 
+                        li Dom
+                        li Lun
+                        li Mar
+                        li Miér
+                        li Jue
+                        li Vie
+                        li Sab
+                    ul.dias
+            //Footer
+            footer
+                a(href="/about/sobre") Sobre la App
+
+        //Script    
+        script(src="/js/script.js") 

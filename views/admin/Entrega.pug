@@ -1,0 +1,55 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Novias Los gatitos
+        link(rel="stylesheet", href="/css/style.css")
+    body 
+        .contenedor 
+            //Navegador
+            .encabezadoTop
+                .encabezadoTexto
+                    h3= titulo 
+                nav 
+                    a(href="/admin/citas") Citas 
+                    a(href="/admin/entrega") Entregas 
+                    a(href="/admin/medidas") Medidas 
+                    a(href="/admin/planchado") Planchado 
+                    a(href="/admin/solicitudes") Solicitudes 
+                    a(href="/admin/admin") Inicio
+                    a(href="/logout") Cerrar Sesión 
+
+            //Tabla de eventos
+            h2 Eventos
+            if eventos.length   
+                table 
+                    thead 
+                        tr 
+                            th Fecha 
+                            th Hora
+                            th Nombre del cliente 
+                            th Telefono del cliente
+                            th Vendedora
+                            th Status del evento
+                            th Detalles
+                            th Acciones
+                    tbody 
+                         each evento in eventos
+                            tr 
+                                td= evento.fechaEvento
+                                td= evento.horaEvento
+                                td= evento.nombreCliente
+                                td= evento.telefonoCliente
+                                td= evento.nombreVendedora
+                                td= evento.status || 'Pendiente'
+                                td= evento.detalles || 'Sin detalles'
+                                td
+                                    form(action=`/evento/${evento.id_Evento}/cancelar` method="post") 
+                                        button(type="submit") Cancelar
+                                    form(action=`/evento/${evento.id_Evento}/terminar`, method="post")
+                                        button(type="submit") Terminar 
+                                    a(href=`/evento/${evento.id_Evento}/editar`)  Editar
+            //Footer
+            footer
+                a(href="/about/sobre") Sobre la App

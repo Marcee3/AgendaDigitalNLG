@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title= titulo
+    link(rel="stylesheet", href="/css/style.css")
+  body
+    .contenedor
+      h2= titulo
+
+      form(action=`/evento/${evento.id_Evento}/editar` method="post")
+        label(for="fechaEvento") Fecha:
+        input(type="date", name="fechaEvento", id="fechaEvento", value=evento.fechaEvento, required)
+
+        label(for="horaEvento") Hora:
+        input(type="time", name="horaEvento", id="horaEvento", value=evento.horaEvento, required)
+
+        label(for="nombreCliente") Cliente:
+        input(type="text", name="nombreCliente", id="nombreCliente", value=evento.nombreCliente, required)
+
+        label(for="telefonoCliente") Teléfono:
+        input(type="text", name="telefonoCliente", id="telefonoCliente", value=evento.telefonoCliente, required)
+
+        label(for="nombreVendedora") Vendedora:
+        //- Lo dejamos como texto, ya que no permites editarlo aquí
+        input(type="text", name="nombreVendedora", id="nombreVendedora", value=evento.nombreVendedora, readonly)
+
+        label(for="codigoVestido") Código de vestido:
+        input(type="text", name="codigoVestido", id="codigoVestido", value=evento.codigoVestido, required)
+
+        label(for="detalles") Detalles:
+        textarea(name="detalles", id="detalles")= evento.detalles
+
+        label Estado:
+        //- Mostramos el estado actual pero sin posibilidad de editar
+        p= evento.status
+
+        button(type="submit") Guardar cambios
+
+      a(href="javascript:history.back()") ← Volver

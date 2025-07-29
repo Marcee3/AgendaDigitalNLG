@@ -1,0 +1,42 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Novias Los gatitos - Solicita tu cita 
+        link(rel="stylesheet", href="/css/style.css")
+    body 
+        .contenedor 
+            //Navegador
+            .encabezadoTop
+                .encabezadoTexto
+                    h3= titulo 
+                nav 
+                    a(href="/requests/citasCliente") Citas 
+                    a(href="/requests/entregaCliente") Entregas 
+                    a(href="/requests/medidasCliente") Medidas 
+                    a(href="/requests/planchadoCliente") Planchado 
+                    a(href="/solicitarCita") Solicitar cita  
+            //Calendario
+            .calendario 
+                header 
+                    p.dia-actual 
+                    .navegador 
+                        span#prev &lt;
+                        span#next &gt;
+                .contenido-calendario 
+                    ul.semanas 
+                        li Dom
+                        li Lun
+                        li Mar
+                        li Miér
+                        li Jue
+                        li Vie
+                        li Sab
+                    ul.dias
+            //Footer
+            footer
+                a(href="/about/informacion") Sobre la App
+
+        //Script    
+        script(src="/js/script.js") 

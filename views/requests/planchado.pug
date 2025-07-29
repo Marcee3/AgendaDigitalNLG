@@ -1,0 +1,37 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Novias Los gatitos
+        link(rel="stylesheet", href="/css/style.css")
+    body 
+        .contenedor 
+            //Navegador
+            .encabezadoTop
+                .encabezadoTexto
+                    h3= titulo 
+                nav 
+                    a(href="/requests/citasCliente") Citas 
+                    a(href="/requests/entregaCliente") Entregas 
+                    a(href="/requests/medidasCliente") Medidas 
+                    a(href="/requests/planchadoCliente") Planchado 
+                    a(href="/requests/cliente") Inicio
+            //Tabla de eventos
+            h2 Eventos
+            if eventos.length   
+                table 
+                    thead 
+                        tr 
+                            th Fecha 
+                            th Hora
+                            th Nombre del cliente 
+                    tbody 
+                         each evento in eventos
+                            tr 
+                                td= evento.fechaEvento
+                                td= evento.horaEvento
+                                td= evento.nombreCliente
+            //Footer
+            footer
+                a(href="/about/informacion") Sobre la App

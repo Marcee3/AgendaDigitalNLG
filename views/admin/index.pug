@@ -1,0 +1,86 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Novias Los gatitos
+        link(rel="stylesheet", href="/css/style.css")
+    body 
+        .contenedor 
+            //Navegador
+            .encabezadoTop
+                .encabezadoTexto
+                    h3= titulo
+                    if error === 'limite'
+                        p(style="color: white;") Se alcanzo el limite de: #{tipoEvento} 
+                nav 
+                    a(href="/admin/citas") Citas 
+                    a(href="/admin/entrega") Entregas 
+                    a(href="/admin/medidas") Medidas 
+                    a(href="/admin/planchado") Planchado 
+                    a(href="/admin/solicitudes") Solicitudes 
+                    a(href="/logout") Cerrar Sesión 
+            //Calendario
+            .calendario 
+                header 
+                    p.dia-actual 
+                    .navegador 
+                        span#prev &lt;
+                        span#next &gt;
+                .contenido-calendario 
+                    ul.semanas 
+                        li Dom
+                        li Lun
+                        li Mar
+                        li Miér
+                        li Jue
+                        li Vie
+                        li Sab
+                    ul.dias 
+            //Modal para agregar cita
+            #modal.modal 
+                .contenido-modal 
+                    span#cerrar.cerrar &times;
+                    h4 Agregar cita
+                    form(method= "POST" action="/admin/formEvento")
+                        div
+                            label(for="tipoEvento") Tipo de cita
+                            select#tipoCita(name="tipoEvento")
+                                option(value="CitaInicial") Cita 
+                                option(value="Medidas") Medidas 
+                                option(value="Entrega") Entrega
+                                option(value="Planchado") Planchado
+                        div 
+                            label(for="nombreEmpleada") Vendedora 
+                            select(name="id_Empleado", id="id_Empleado", required)
+                                each empleado in empleados
+                                    option(value=empleado.id_Empleado)= empleado.nombre + ' ' + empleado.apPaterno + ' ' + empleado.apMaterno
+
+                        div.fecha-hora
+                            .campo 
+                                label(for="fechaEvento") Fecha:
+                                input(type="date", name="fechaEvento", id="fechaEvento")
+                            .campo
+                                label(for="horaEvento") Hora:
+                                input(type="time", name="horaEvento", id="horaEvento")
+                        div 
+                            label(for="nombreCliente") Nombre del cliente
+                            input(type="text", name="nombreCliente", id="nombreCliente")
+                        div 
+                            label(for="telefonoCliente") Teléfono del cliente
+                            input(type="tel", name="telefonoCliente", id="telefonoCliente")
+                        div 
+                            label(for="codigoVestido") Código del vestido
+                            input(type="text", name="codigoVestido", id="codigoVestido")
+                        div 
+                            label(for="detalles") Detalles de la cita
+                            textarea(name="detalles", id="detalles")
+                        button(type="submit") Agregar cita
+            //Boton para agregar cita
+            button#btn Agregar cita
+            //Footer
+            footer
+                a(href="/about/sobre") Sobre la App
+
+        //Script    
+        script(src="/js/script.js") 

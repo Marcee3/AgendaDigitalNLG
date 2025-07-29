@@ -1,0 +1,17 @@
+{
+    "short_name": "Agenda NLG",
+    "name": "Agenda Digital de Novias Los Gatitos",
+    "icons": [
+        {
+            "type": "image/png",
+            "src": "/images/logo.png",
+            "sizes": "192x192"
+        }
+    ],
+    "start_url":"/",
+    "display": "standalone",
+    "background_color": "#b07086",
+    "theme_color": "#b07086",
+    "orientation": "portrait",
+    "categories": ["brides","business","dates"]
+}

@@ -1,0 +1,41 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Novias Los gatitos
+        link(rel="stylesheet", href="/css/style.css")
+    body 
+        .contenedor 
+            //Navegador
+            .encabezadoTop
+                .encabezadoTexto
+                    h3= titulo 
+                nav 
+                    a(href="/") Inicio
+
+            //Formulario para el login        
+            form(method= "POST" action="/login" class="contenido-login")
+                div
+                    label(for="telefono") Ingresa tu numero de telefono
+                    input(type="tel", name="telefono", id="telefono")
+                div
+                    label(for="contrasena") Ingresa tu contraseña
+                    input(type="password", name="contrasena", id="contrasena")
+
+                button(type="submit") Iniciar sesión
+                
+                if error
+                    p(style="color:red")
+                        if error == 'campos'
+                            | Todos los campos son obligatorios.
+                        else if error == 'noexiste'
+                            | El teléfono no está registrado.
+                        else if error == 'sinpermiso'
+                            | No tienes permisos para acceder.
+                        else if error == 'contrasena'
+                            | Contraseña incorrecta.
+
+            //Footer
+            footer
+                a(href="/about/informacion") Sobre la App

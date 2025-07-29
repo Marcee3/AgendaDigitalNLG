@@ -1,0 +1,49 @@
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= titulo
+    link(rel="stylesheet", href="/css/style.css")
+  body
+    .contenedor
+      .encabezadoTop
+        .encabezadoTexto
+          h3= titulo
+        nav 
+            a(href="/admin/citas") Citas 
+            a(href="/admin/entrega") Entregas 
+            a(href="/admin/medidas") Medidas 
+            a(href="/admin/planchado") Planchado 
+            a(href="/admin/solicitudes") Solicitudes 
+            a(href="/admin/admin") Inicio
+            a(href="/logout") Cerrar Sesión 
+
+      h2 Lista de Solicitudes
+
+      if solicitudes.length
+        table
+          thead
+            tr
+              th Nombre
+              th Teléfono
+              th Fecha
+              th Hora
+              th Tipo
+              th Detalles
+              th Estado
+          tbody
+            each solicitud in solicitudes
+              tr
+                td #{solicitud.nombre} #{solicitud.apPaterno} #{solicitud.apMaterno}
+                td= solicitud.telefono
+                td= solicitud.fechaEvento
+                td= solicitud.horaEvento
+                td= solicitud.tipoEvento
+                td= solicitud.detalles || 'Sin detalles'
+                td= solicitud.status
+      else
+        p No hay solicitudes registradas aún.
+
+    footer
+      a(href="/about/sobre") Sobre la App

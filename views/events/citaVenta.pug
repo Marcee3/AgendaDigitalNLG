@@ -1,0 +1,43 @@
+//- views/events/citaVenta.pug
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Novias Los gatitos - Citas Públicas
+    link(rel="stylesheet", href="/css/style.css")
+  body
+    .contenedor
+      .encabezadoTop
+        .encabezadoTexto
+          h3= titulo 
+        nav
+          a(href="/citasVenta") Citas 
+          a(href="/entregaVenta") Entregas 
+          a(href="/medidasVenta") Medidas 
+          a(href="/planchadoVenta") Planchado 
+          a(href="/") Inicio
+      h2 Eventos
+      if eventos.length
+        table
+          thead
+            tr
+              th Fecha 
+              th Hora
+              th Nombre del cliente 
+              th Teléfono del cliente
+              th Vendedora
+              th Status del evento
+          tbody
+            each evento in eventos
+              tr
+                td= evento.fechaEvento
+                td= evento.horaEvento
+                td= evento.nombreCliente
+                td= evento.telefonoCliente
+                td= evento.nombreVendedora
+                td= evento.status || 'Pendiente'
+      else
+        p No hay eventos disponibles.
+      footer
+        a(href="/sobre") Sobre la App
