@@ -12,6 +12,9 @@ try {
     await db.authenticate();
     db.sync();
     console.log('Conexión a la base de datos exitosa');
+
+    await db.sync({});
+    console.log('Creacion de tablas');
 } catch(error) {
     console.log('Error de conexión a la base de datos:', error);
     process.exit(1);

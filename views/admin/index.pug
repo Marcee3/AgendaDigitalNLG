@@ -12,7 +12,16 @@ html(lang="en")
                 .encabezadoTexto
                     h3= titulo
                     if error === 'limite'
-                        p(style="color: white;") Se alcanzo el limite de: #{tipoEvento} 
+                        p(style="color: white;") Se alcanzo el limite de: #{tipoEvento}
+
+                    else if error === 'domingo'
+                        p(style="color: white;") No se pueden agendar citas de tipo "#{tipoEvento}" los domingos.
+
+                    else if error === 'sabado'
+                        p(style="color: white;") No se pueden agendar entregas los sábados. 
+
+                    else if error === 'pasado'
+                        p(style="color: white;") No se pueden agendar eventos en dias pasados.
                 nav 
                     a(href="/admin/citas") Citas 
                     a(href="/admin/entrega") Entregas 

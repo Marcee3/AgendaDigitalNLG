@@ -88,7 +88,8 @@ const admin = async(req, res) => {
             titulo: 'Gestionar Agenda',
             empleados,
             error: req.query.error || null, // Si hay un error, lo mostramos
-            tipoEvento : req.query.tipoEvento || null // Si hay un tipo de evento, lo mostramos
+            tipoEvento : req.query.tipoEvento || null, // Si hay un tipo de evento, lo mostramos
+            dia: req.query.dia || null, // Si hay un dia, lo mostramos
         });
     } catch (error) {
         console.error('Error al obtener los empleados: ', error);
@@ -113,6 +114,23 @@ const guardarEvento = async(req, res) => {
                 return res.redirect(`/admin?error=limite&tipoEvento=${tipoEvento}`);
             }
         
+        //Limitaciones de dias para entregas y medidas
+        const dia = new Date(fechaEvento).getDay();
+        if ((tipoEvento === 'Entrega' || tipoEvento === 'Medida') && dia === 0) {
+            return res.redirect(`/admin?error=dia&tipoEvento=${tipoEvento}`);
+        }
+        if (tipoEvento === 'Entrega' && dia === 6) {
+            return res.redirect(`/admin?error=dia&tipoEvento=${tipoEvento}`);
+        }
+
+        //Validacion para no crear eventos en dias anteriores
+        const fechaActual = new Date(`${fechaEvento}T${horaEvento}`);
+        const actual = new Date();
+
+        if (fechaActual < actual) {
+            return res.redirect(`/admin?error=fecha&tipoEvento=${tipoEvento}`);
+        }
+
         await Evento.create({
             tipoEvento: tipoEvento,
             id_Empleado: id_Empleado,
