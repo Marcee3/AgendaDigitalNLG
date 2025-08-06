@@ -1,5 +1,5 @@
 import express from 'express';
-import { index, sobre, informacion, login, iniciarSesion,logout, admin, guardarEvento, cancelarEvento, terminarEvento, editar, actualizar } from '../controllers/controller.js';
+import { index, sobre, informacion, login, iniciarSesion,logout, admin, guardarEvento, cancelarEvento, terminarEvento, editar, actualizar, aceptarSolicitud } from '../controllers/controller.js';
 import { citaInicial, entrega, medidas, planchado } from '../controllers/eventoController.js';
 import { citaVenta, entregaVenta, medidasVenta, planchadoVenta } from '../controllers/usuariosController.js';
 import { indexCliente, formularioCita, solicitarEvento, citaCliente, entregaCliente, medidasCliente, planchadoCliente } from '../controllers/clienteController.js';
@@ -41,6 +41,9 @@ router.post('/evento/:id_Evento/terminar', terminarEvento);
 //Editar Eventos
 router.get('/evento/:id_Evento/editar', editar);
 router.post('/evento/:id_Evento/editar', actualizar)
+
+//Aceptar solicitudes
+router.post('/solicitudes/:id_Solicitud/aceptar', aceptarSolicitud);
 
 //Login
 router.get('/login', login)

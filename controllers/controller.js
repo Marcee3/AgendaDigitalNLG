@@ -1,6 +1,7 @@
 import { check, validationResult } from "express-validator"; 
 import Empleado from "../models/Empleado.js";
 import Evento from "../models/Evento.js";
+import Solicitud from "../models/Solicitud.js";
 
 //Página principal
 const index = (req, res) => {
@@ -84,12 +85,41 @@ const admin = async(req, res) => {
         const empleados = await Empleado.findAll({ // Obtenemos todos los empleados
             order: [['apPaterno', 'ASC']]
         });
+        // Mapea los códigos de error a mensajes amigables
+        const mensajesError = {
+            limite: ' Límite de eventos alcanzado para ese tipo y fecha.',
+            dia: ' No se pueden agendar eventos ese día para el tipo seleccionado.',
+            fecha: ' No puedes crear eventos en fechas pasadas.',
+            campos: 'Por favor completa todos los campos.',
+            noexiste: ' Usuario no encontrado.',
+            sinpermiso: ' No tienes permisos para acceder.',
+            contrasena: ' Contraseña incorrecta.',
+        };
+
+        // Mapea códigos de mensaje a texto para mostrar
+        const mensajesExito = {
+            solicitud_aceptada: ' Solicitud aceptada con éxito.',
+            evento_guardado: ' Evento guardado correctamente.',
+            evento_actualizado: ' Evento actualizado correctamente.',
+            evento_cancelado: ' Evento cancelado correctamente.',
+            evento_terminado: ' Evento completado correctamente.'
+        };
+
+        // Obtenemos el texto a mostrar según error o mensaje
+        let mensajeMostrar = null;
+        if (req.query.error && mensajesError[req.query.error]) {
+            mensajeMostrar = mensajesError[req.query.error];
+        } else if (req.query.mensaje && mensajesExito[req.query.mensaje]) {
+            mensajeMostrar = mensajesExito[req.query.mensaje];
+        }
+
         res.render('admin/index', {
             titulo: 'Gestionar Agenda',
             empleados,
-            error: req.query.error || null, // Si hay un error, lo mostramos
+            error: null, // Si hay un error, lo mostramos
             tipoEvento : req.query.tipoEvento || null, // Si hay un tipo de evento, lo mostramos
             dia: req.query.dia || null, // Si hay un dia, lo mostramos
+            mensaje: mensajeMostrar // Si hay un mensaje, lo mostramos
         });
     } catch (error) {
         console.error('Error al obtener los empleados: ', error);
@@ -111,16 +141,16 @@ const guardarEvento = async(req, res) => {
             }
         });
             if (limiteEventos >= 6) {
-                return res.redirect(`/admin?error=limite&tipoEvento=${tipoEvento}`);
+                return res.redirect(`/admin/admin?mensaje=limite&tipoEvento=${tipoEvento}`);
             }
         
         //Limitaciones de dias para entregas y medidas
         const dia = new Date(fechaEvento).getDay();
         if ((tipoEvento === 'Entrega' || tipoEvento === 'Medida') && dia === 0) {
-            return res.redirect(`/admin?error=dia&tipoEvento=${tipoEvento}`);
+            return res.redirect(`/admin/admin?mensaje=domingo&tipoEvento=${tipoEvento}`);
         }
         if (tipoEvento === 'Entrega' && dia === 6) {
-            return res.redirect(`/admin?error=dia&tipoEvento=${tipoEvento}`);
+            return res.redirect(`/admin/admin?mensaje=sabado&tipoEvento=${tipoEvento}`);
         }
 
         //Validacion para no crear eventos en dias anteriores
@@ -128,7 +158,7 @@ const guardarEvento = async(req, res) => {
         const actual = new Date();
 
         if (fechaActual < actual) {
-            return res.redirect(`/admin?error=fecha&tipoEvento=${tipoEvento}`);
+            return res.redirect(`/admin/admin?mensaje=pasado&tipoEvento=${tipoEvento}`);
         }
 
         await Evento.create({
@@ -142,7 +172,7 @@ const guardarEvento = async(req, res) => {
             detalles
         });
 
-        res.redirect('/admin/admin'); //Comprobar si quito el /admin/admin
+        res.redirect('/admin/admin?mensaje=evento_guardado');
 
     } catch (error) {
         console.error('Error al guardar el evento: ', error);
@@ -224,6 +254,7 @@ const actualizar = async(req, res) => {
             return res.status(404).json({ msg: 'Evento no encontrado' });
         }
 
+        evento.tipoEvento = tipoEvento;
         evento.fechaEvento = fechaEvento;
         evento.horaEvento = horaEvento;
         evento.nombreCliente = nombreCliente;
@@ -247,6 +278,36 @@ const actualizar = async(req, res) => {
     }
 };
 
+//Aceptar una solicitud
+const aceptarSolicitud = async(req, res) => {
+    const { id_Solicitud } = req.params;
+    try {
+        const solicitud = await Solicitud.findByPk(id_Solicitud);
+        if (!solicitud) {
+            return res.status(404).json({ msg: 'Solicitud no encontrada' });
+        }
+        const empleadoDisponible = await Empleado.findOne({
+            where: { rol: 'Vendedora' } // o el rol que corresponda
+        });
+        await Evento.create({
+            tipoEvento: solicitud.tipoEvento,
+            id_Empleado: empleadoDisponible ? empleadoDisponible.id_Empleado : 1, // usa 1 como default si no hay
+            fechaEvento: solicitud.fechaEvento,
+            horaEvento: solicitud.horaEvento,
+            nombreCliente: `${solicitud.nombre} ${solicitud.apPaterno} ${solicitud.apMaterno}`,
+            telefonoCliente: solicitud.telefono,
+            codigoVestido: '', // vacío o puedes llenarlo si ya lo tienes
+            detalles: solicitud.detalles,
+            status: 'Pendiente'
+        });
+        await solicitud.destroy();
+        res.redirect('/admin/admin?mensaje=solicitud_aceptada')
+    } catch (error) {
+        console.error('Error al actualizar el evento: ', error);
+        res.status(500).send('Error del servidor');
+    }
+};
+
 export {
     index,
     sobre,
@@ -259,5 +320,6 @@ export {
     cancelarEvento,
     terminarEvento,
     editar, 
-    actualizar
+    actualizar,
+    aceptarSolicitud
 }

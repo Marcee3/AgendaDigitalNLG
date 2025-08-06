@@ -332,7 +332,29 @@ td form button, td a {
     font-size: 12px;
 }
 
+.informacionApp {
+    background-color: #f8f8f8;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 900px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
 
+.informacionApp h2, 
+.informacionApp h3, 
+.informacionApp h4 {
+    color: #b86c94;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.informacionApp p {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
 
 /* Footer */
 footer {
@@ -342,9 +364,11 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 10vh;
+    height: fit-content;
     align-items: center;
     align-content: center;
     justify-content: center;
     text-align: center;
 }
+
+

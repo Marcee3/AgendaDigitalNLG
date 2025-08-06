@@ -32,6 +32,7 @@ html(lang="es")
               th Tipo
               th Detalles
               th Estado
+              th Acciones
           tbody
             each solicitud in solicitudes
               tr
@@ -42,6 +43,9 @@ html(lang="es")
                 td= solicitud.tipoEvento
                 td= solicitud.detalles || 'Sin detalles'
                 td= solicitud.status
+                td  
+                  form(action=`/solicitudes/${solicitud.id_Solicitud}/aceptar`, method='post') 
+                    button(type="submit") Aceptar solicitud
       else
         p No hay solicitudes registradas aún.
 

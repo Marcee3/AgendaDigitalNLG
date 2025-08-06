@@ -11,17 +11,44 @@ html(lang="en")
             .encabezadoTop
                 .encabezadoTexto
                     h3= titulo
-                    if error === 'limite'
-                        p(style="color: white;") Se alcanzo el limite de: #{tipoEvento}
+                    if mensaje
+                    - let texto = ''
+                    - let color = 'white'
 
-                    else if error === 'domingo'
-                        p(style="color: white;") No se pueden agendar citas de tipo "#{tipoEvento}" los domingos.
+                    if mensaje === 'solicitud_aceptada'
+                        - texto = 'Se aceptó la solicitud.'
+                        - color = '#28a745'  // verde
 
-                    else if error === 'sabado'
-                        p(style="color: white;") No se pueden agendar entregas los sábados. 
+                    else if mensaje === 'limite'
+                        - texto = `Se alcanzó el límite de: ${tipoEvento}`
+                        - color = '#dc3545'  // rojo
 
-                    else if error === 'pasado'
-                        p(style="color: white;") No se pueden agendar eventos en dias pasados.
+                    else if mensaje === 'domingo'
+                        - texto = `No se pueden agendar citas de tipo "${tipoEvento}" los domingos.`
+                        - color = '#ffc107'  // amarillo
+
+                    else if mensaje === 'sabado'
+                        - texto = 'No se pueden agendar entregas los sábados.'
+                        - color = '#ffc107'  // amarillo
+
+                    else if mensaje === 'pasado'
+                        - texto = 'No se pueden agendar eventos en días pasados.'
+                        - color = '#dc3545'  // rojo
+
+                    else if mensaje === 'evento_guardado'
+                        - texto = 'Evento guardado correctamente.'
+                        - color = '#28a745'
+
+                    else if mensaje === 'evento_cancelado'
+                        - texto = 'Evento cancelado correctamente.'
+                        - color = '#28a745'
+
+                    else if mensaje === 'evento_terminado'
+                        - texto = 'Evento completado correctamente.'
+                        - color = '#28a745'
+
+                    if texto
+                        p(style=`color: ${color}; font-weight: bold; margin-top: 5px;`) #{texto} pasados.
                 nav 
                     a(href="/admin/citas") Citas 
                     a(href="/admin/entrega") Entregas 
