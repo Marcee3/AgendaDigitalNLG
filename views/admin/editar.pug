@@ -12,6 +12,13 @@ html(lang="en")
           h2= titulo
       
       form(action=`/evento/${evento.id_Evento}/editar` method="post" class="contenido-login")
+        div 
+          label(for="tipoEvento") Tipo de cita
+          select#tipoCita(name="tipoEvento")
+            option(value="CitaInicial") Cita 
+            option(value="Medidas") Medidas 
+            option(value="Entrega") Entrega
+            option(value="Planchado") Planchado 
         div
           label(for="fechaEvento") Fecha:
           input(type="date", name="fechaEvento", id="fechaEvento", value=evento.fechaEvento, required)
